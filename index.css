@@ -1,0 +1,25 @@
+body {
+    background-color: #0e3386
+}
+
+h3 {
+    background-color: #cc3433;
+    color: white;
+    padding: 10px;
+}
+
+.label-style {
+    margin-bottom: 10px;
+}
+
+.button-text {
+    margin-left: 10px;
+}
+
+#heatmap {
+    max-width: 550px;
+}
+
+.modebar {
+    display: none;
+}
