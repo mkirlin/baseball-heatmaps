@@ -1,3 +1,5 @@
+// TODO: Rewrite every for loop into a .map()
+
 $(function() {
     drawGraph();
     $(":checkbox").change(function(){
@@ -130,7 +132,7 @@ function filterPitches(pitches, filters) {
                 }
             };
             if (jQuery.inArray("hbp", filters) != -1) {
-                if (pitches[i].pa_outcome === "HBP") {
+                if (pitches[i].pa_outcome === "HBP" && pitches[i].is_pa_pitch === true) {
                     filteredPitches.push(pitches[i])
                 }
             };
