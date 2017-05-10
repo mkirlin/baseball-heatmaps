@@ -35,10 +35,10 @@ function drawGraphAndFormatFilters() {
         hideUnusedPitchTypes(pitches)
         initializeAutocomplete(pitches)
 
-        var y_max = Math.round(Math.max.apply(Math,pitches.map(function(pitch){return pitch.location_z;}))) + .25
-        var x_max = Math.round(Math.max.apply(Math,pitches.map(function(pitch){return pitch.location_x;}))) + .25
-        var y_min = Math.round(Math.min.apply(Math,pitches.map(function(pitch){return pitch.location_z;}))) - .25
-        var x_min = Math.round(Math.min.apply(Math,pitches.map(function(pitch){return pitch.location_x;}))) - .25
+        var yMax = Math.round(Math.max.apply(Math,pitches.map(function(pitch){return pitch.location_z;}))) + .25
+        var xMax = Math.round(Math.max.apply(Math,pitches.map(function(pitch){return pitch.location_x;}))) + .25
+        var yMin = Math.round(Math.min.apply(Math,pitches.map(function(pitch){return pitch.location_z;}))) - .25
+        var xMin = Math.round(Math.min.apply(Math,pitches.map(function(pitch){return pitch.location_x;}))) - .25
 
         var layout = {
             showlegend: false,
@@ -47,7 +47,7 @@ function drawGraphAndFormatFilters() {
                 t: 20
             },
             xaxis: {
-                range: [x_min, x_max],
+                range: [xMin, xMax],
                 dtick: 1,
                 showgrid: false,
                 zeroline: false,
@@ -55,7 +55,7 @@ function drawGraphAndFormatFilters() {
             },
             yaxis: {
                 rangemode: "nonnegative",
-                range: [y_min, y_max],
+                range: [yMin, yMax],
                 dtick: 1,
                 showgrid: false,
                 zeroline: false,
@@ -80,12 +80,12 @@ function drawGraphAndFormatFilters() {
 
         var filteredPitches = filterPitches(pitches)
 
-        var x_vals = getPitchPositions(filteredPitches, "x")
-        var y_vals = getPitchPositions(filteredPitches, "y")
+        var xVals = getPitchPositions(filteredPitches, "x")
+        var yVals = getPitchPositions(filteredPitches, "y")
 
         var trace1 = {
-            x: x_vals,
-            y: y_vals,
+            x: xVals,
+            y: yVals,
             mode: "markers",
             type: "scatter",
             name: "",
@@ -98,8 +98,8 @@ function drawGraphAndFormatFilters() {
         };
 
         var trace2 = {
-            x: x_vals,
-            y: y_vals,
+            x: xVals,
+            y: yVals,
             // colorscale: "YIGnBu",
             colorscale: "Hot",
             name: "density",
@@ -300,8 +300,8 @@ function getBatterName() {
 }
 
 function getBatterHandedness() {
-    if ($("input[name='handednessOptions']:checked").val()) {
-        return [$("input[name='handednessOptions']:checked").val()];
+    if ($("input[name='handedness-options']:checked").val()) {
+        return [$("input[name='handedness-options']:checked").val()];
     } else {
         return []
     }
