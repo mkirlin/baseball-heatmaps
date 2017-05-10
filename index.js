@@ -162,7 +162,7 @@ function filterPitches(pitches, filters) {
     if (filters.type_filters.length === 0 && filters.outcome_filters.length === 0) {
         filteredPitches = pitches
     } else {
-        filteredPitches = pitches.map(function(pitch) {
+        for (i = 0; i < pitches.length; i++) {
             // Remove pitches where Y value is below 0; bad data.
             // if (pitches[i].location_z < 0) {
             //     pitches.splice(i, 1)
@@ -173,35 +173,35 @@ function filterPitches(pitches, filters) {
             // Apply filters
             if (filters.outcome_filters.length > 0) {
                 if ($.inArray("ball", filters.outcome_filters) != -1) {
-                    if (pitch.is_called_ball === true) {
+                    if (pitches[i].is_called_ball === true) {
                         outcome_filters_results.push(true)
                     } else {
                         outcome_filters_results.push(false)
                     };
                 };
                 if ($.inArray("strike", filters.outcome_filters) != -1) {
-                    if ((pitch.is_bip === false && pitch.is_swing === true) || pitch.is_called_strike === true) {
+                    if ((pitches[i].is_bip === false && pitches[i].is_swing === true) || pitches[i].is_called_strike === true) {
                         outcome_filters_results.push(true)
                     } else {
                         outcome_filters_results.push(false)
                     };
                 };
                 if ($.inArray("foul", filters.outcome_filters) != -1) {
-                    if (pitch.is_foul === true) {
+                    if (pitches[i].is_foul === true) {
                         outcome_filters_results.push(true)
                     } else {
                         outcome_filters_results.push(false)
                     };
                 };
                 if ($.inArray("bip", filters.outcome_filters) != -1) {
-                    if (pitch.is_bip === true) {
+                    if (pitches[i].is_bip === true) {
                         outcome_filters_results.push(true)
                     } else {
                         outcome_filters_results.push(false)
                     };
                 };
                 if ($.inArray("hbp", filters.outcome_filters) != -1) {
-                    if (pitch.pa_outcome === "HBP" && pitch.is_pa_pitch === true) {
+                    if (pitches[i].pa_outcome === "HBP" && pitches[i].is_pa_pitch === true) {
                         outcome_filters_results.push(true)
                     } else {
                         outcome_filters_results.push(false)
@@ -212,7 +212,7 @@ function filterPitches(pitches, filters) {
             var type_filters_results = []
 
             if (filters.type_filters.length > 0) {
-                if ($.inArray(pitch.pitch_type, filters.type_filters) != -1) {
+                if ($.inArray(pitches[i].pitch_type, filters.type_filters) != -1) {
                     type_filters_results.push(true)
                 } else {
                     type_filters_results.push(false)
@@ -221,18 +221,18 @@ function filterPitches(pitches, filters) {
 
             if (outcome_filters_results.length > 0 && type_filters_results.length > 0) {
                 if (outcome_filters_results.includes(true) && type_filters_results.includes(true)) {
-                    return pitch
+                    filteredPitches.push(pitches[i])
                 }
             } else if (outcome_filters_results.length > 0 && type_filters_results.length === 0) {
                 if (outcome_filters_results.includes(true)) {
-                    return pitch
+                    filteredPitches.push(pitches[i])
                 }
             } else if (outcome_filters_results.length === 0 && type_filters_results.length > 0) {
                 if (type_filters_results.includes(true)) {
-                    return pitch
+                    filteredPitches.push(pitches[i])
                 }
             }
-        });
+        }
     }
     return filteredPitches
 }
