@@ -196,20 +196,20 @@ function determineSymbols(pitches) {
 function determineColors(pitches) {
     return pitches.map(function(pitch) {
         if (pitch.is_called_strike === true) {
-            return "rgb(0,109,44)"
+            return "rgb(178,24,43)"
         } else if (pitch.is_foul === true) {
-            return "rgb(0,109,44)"
+            return "rgb(178,24,43)"
         } else if (pitch.is_bip === false && pitch.is_swing === true) {
-            return "rgb(0,109,44)"
+            return "rgb(178,24,43)"
         } else if (pitch.is_called_ball === true) {
-            return "rgb(44,162,95)"
+            return "rgb(241,163,64)"
         } else if (pitch.is_bip === true) {
-            return "rgb(102,194,164)"
+            return "rgb(27,120,55)"
         } else if (pitch.pa_outcome === "HBP") {
-            return "rgb(153,216,201)"
+            return "rgb(33,102,172)"
         } else {
             // Missed bunt attempt, counts as a strike
-            return "rgb(0,109,44)"
+            return "rgb(178,24,43)"
         }
     });
 }
