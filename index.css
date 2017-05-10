@@ -2,7 +2,7 @@ body {
     background-color: #0e3386
 }
 
-h3 {
+h3, h4 {
     background-color: #cc3433;
     color: white;
     padding: 10px;

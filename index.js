@@ -16,14 +16,15 @@ $(function() {
     });
     $(".uncheck-all").change(function(){
         var currentClasses = this.className.split(/\s+/)
-        currentClasses.splice($.inArray("pull-left", currentClasses), 1);
-        currentClasses.splice($.inArray("uncheck-all", currentClasses), 1);
+        if ($.inArray("uncheck-all", currentClasses) != -1) {
+            currentClasses.splice($.inArray("uncheck-all", currentClasses), 1);
+        }
         var classToUncheck = currentClasses[0]
         $("." + classToUncheck).prop("checked", false);
         $(".uncheck-all").prop("checked", false);
         drawGraphAndFormatFilters();
     })
-    $( window ).resize(function() {
+    $(window).resize(function() {
         drawGraphAndFormatFilters();
     });
 });
@@ -113,7 +114,7 @@ function drawGraphAndFormatFilters() {
         }
 
         var data = getRequestedGraphs(availableGraphs);
-
+        setPitchCount(filteredPitches.length);
         Plotly.purge("heatmap");
         Plotly.plot("heatmap", data, layout)
     });
@@ -231,6 +232,10 @@ function getRequestedGraphs(availableGraphs) {
         }
     }
     return requestedGraphs
+}
+
+function setPitchCount(filteredPitchesLength) {
+    $("#current-pitch-count").text(filteredPitchesLength)
 }
 
 ////////// FILTERING //////////
