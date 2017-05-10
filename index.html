@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -25,150 +25,138 @@
     <script src="index.js"></script>
     <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="shortcut icon" href="https://content.mlb.com/assets/images/7/5/4/220493754/cuts/112_tgjry8t7_lpdbxydj.png" type="image/png"/>
-</head>
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-md-6">
-        <div class="col-xs-12">
-          <div class="row"><h3 class="text-center">Pitch Graph</h3></div>
-          <div class="row">
-            <div id="heatmap"></div>
-          </div>
-        </div>
-        <div class="btn-group col-xs-12 ui-front">
-          <div class="row"><h3 class="text-center">Batter Characteristics</h3></div>
-          <div class="row">
-            <div class="btn btn-default label-style col-xs-12">
-              <input type="text" class="form-control" id="batter-name" placeholder="Batter Name">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="col-xs-12">
+            <div class="row"><h3 class="text-center">Pitch Graph</h3></div>
+            <div class="row">
+              <div id="heatmap"></div>
             </div>
           </div>
-          <div class="row">
-            <div class="btn btn-default label-style col-xs-12">
-              <label class="radio-inline">
-                <input type="radio" name="handednessOptions" id="left-handed" value="L"> Left-handed
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="handednessOptions" id="" value=""> Either Hand
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="handednessOptions" id="right-handed" value="R"> Right-handed
-              </label>
+          <div class="btn-group col-xs-12 ui-front">
+            <div class="row"><h3 class="text-center">Batter Characteristics</h3></div>
+            <div class="row">
+              <div class="btn btn-default label-style col-xs-12">
+                <input type="text" class="form-control" id="batter-name" placeholder="Batter Name">
+              </div>
+            </div>
+            <div class="row">
+              <div class="btn btn-default label-style col-xs-12">
+                <label class="radio-inline">
+                  <input type="radio" name="handednessOptions" id="left-handed" value="L"> Left-handed
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="handednessOptions" id="" value=""> Either Hand
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="handednessOptions" id="right-handed" value="R"> Right-handed
+                </label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-xs-12 col-md-6">
-        <div class="btn-group col-xs-12">
-          <div class="row"><h3 class="text-center">Graph Type</h3></div>
-          <div class="row">
-            <label class="btn btn-default col-xs-5 label-style">
-              <input type="checkbox" value="contour" class="pull-left graph-filters" checked> <span class="pull-left button-text">Contoured Heatmap</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style pull-right">
-              <input type="checkbox" value="scattergram" class="pull-left graph-filters"> <span class="pull-left button-text">Scattergram</span>
-            </label>
+        <div class="col-xs-12 col-md-6">
+          <div class="btn-group col-xs-12">
+            <div class="row"><h3 class="text-center">Graph Type</h3></div>
+            <div class="row">
+              <label class="btn btn-default col-xs-5 label-style">
+                <input type="checkbox" value="contour" class="pull-left graph-filters" checked> <span class="pull-left button-text">Contoured Heatmap</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style pull-right">
+                <input type="checkbox" value="scattergram" class="pull-left graph-filters"> <span class="pull-left button-text">Scattergram</span>
+              </label>
+            </div>
           </div>
-        </div>
-        <div class="btn-group col-xs-12">
-          <div class="row"><h3 class="text-center">Pitch Outcome</h3></div>
-          <div class="row">
-            <label class="btn btn-default col-xs-5 label-style">
-              <input type="checkbox" value="ball" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Ball</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style pull-right">
-              <input type="checkbox" value="strike" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Strike</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style">
-              <input type="checkbox" value="foul" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Foul</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style pull-right">
-              <input type="checkbox" value="bip" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Ball In Play</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style">
-              <input type="checkbox" value="hbp" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Hit By Pitch</span>
-            </label>
+          <div class="btn-group col-xs-12">
+            <div class="row"><h3 class="text-center">Pitch Outcome</h3></div>
+            <div class="row">
+              <label class="btn btn-default col-xs-5 label-style">
+                <input type="checkbox" value="ball" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Ball</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style pull-right">
+                <input type="checkbox" value="strike" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Strike</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style">
+                <input type="checkbox" value="foul" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Foul</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style pull-right">
+                <input type="checkbox" value="bip" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Ball In Play</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style">
+                <input type="checkbox" value="hbp" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Hit By Pitch</span>
+              </label>
+            </div>
+            <div class="row">
+              <div class="col-xs-4"></div>
+              <label class="btn btn-default col-xs-4 label-style">
+                <input type="checkbox" class="pull-left pitch-outcome-filters uncheck-all"> <span class="pull-left button-text">Uncheck All</span>
+              </label>
+              <div class="col-xs-4"></div>
+            </div>
           </div>
-          <div class="row">
-            <div class="col-xs-4"></div>
-            <label class="btn btn-default col-xs-4 label-style">
-              <input type="checkbox" class="pull-left pitch-outcome-filters uncheck-all"> <span class="pull-left button-text">Uncheck All</span>
-            </label>
-            <div class="col-xs-4"></div>
-          </div>
-        </div>
-        <div class="btn-group col-xs-12">
-          <div class="row"><h3 class="text-center">Pitch Type</h3></div>
-          <div class="row">
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="FA" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Fastball</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="FT" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Two-seam Fastball</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="FC" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Cutter</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="FS" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Splitter</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="FO" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Pitch Out</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="SI" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Sinker</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="SL" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Slider</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="CU" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Curveball</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="KC" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Knuckle-curve</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="EP" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Eephus</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="CH" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Changeup</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="SC" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Screwball</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="KN" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Knuckleball</span>
-            </label>
-            <label class="btn btn-default col-xs-5 label-style hidden">
-              <input type="checkbox" value="IB" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Intentional Ball</span>
-            </label>
-            <!-- Removed for now because these pitches do not have coordinates. -->
-            <!-- <label class="btn btn-default col-xs-5 label-style">
-              <input type="checkbox" value="UN" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Unidentified</span>
-            </label> -->
-          </div>
-          <div class="row">
-            <div class="col-xs-4"></div>
-            <label class="btn btn-default col-xs-4 label-style">
-              <input type="checkbox" class="pull-left pitch-type-filters uncheck-all"> <span class="pull-left button-text">Uncheck All</span>
-            </label>
-            <div class="col-xs-4"></div>
+          <div class="btn-group col-xs-12">
+            <div class="row"><h3 class="text-center">Pitch Type</h3></div>
+            <div class="row">
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="FA" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Fastball</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="FT" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Two-seam Fastball</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="FC" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Cutter</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="FS" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Splitter</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="FO" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Pitch Out</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="SI" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Sinker</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="SL" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Slider</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="CU" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Curveball</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="KC" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Knuckle-curve</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="EP" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Eephus</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="CH" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Changeup</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="SC" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Screwball</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="KN" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Knuckleball</span>
+              </label>
+              <label class="btn btn-default col-xs-5 label-style hidden">
+                <input type="checkbox" value="IB" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Intentional Ball</span>
+              </label>
+              <!-- Removed for now because these pitches do not have coordinates. -->
+              <!-- <label class="btn btn-default col-xs-5 label-style">
+                <input type="checkbox" value="UN" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Unidentified</span>
+              </label> -->
+            </div>
+            <div class="row">
+              <div class="col-xs-4"></div>
+              <label class="btn btn-default col-xs-4 label-style">
+                <input type="checkbox" class="pull-left pitch-type-filters uncheck-all"> <span class="pull-left button-text">Uncheck All</span>
+              </label>
+              <div class="col-xs-4"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Thoughts: -->
-  <!-- How to show the strike zone -->
-  <!-- Pull the data with jQuery -->
-  <!-- Buttons: does Plot.ly support them somehow? -->
-  <!-- Get cheap styling with Bootstrap -->
-  <!-- Deploy via Github Pages -->
-  <!-- Options to display: -->
-      <!-- Batter handedness
-      Pitch type
-      Pitch velocity
-      Call on pitch
-      Pitches that induced certain types of outs -->
-</body>
+  </body>
 </html>
