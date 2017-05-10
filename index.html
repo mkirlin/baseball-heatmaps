@@ -9,6 +9,9 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -27,12 +30,36 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <h3 class="text-center">Pitch Graph</h3>
-        <div id="heatmap"></div>
+        <div class="col-xs-12">
+          <div class="row"><h3 class="text-center">Pitch Graph</h3></div>
+          <div class="row">
+            <div id="heatmap"></div>
+          </div>
+        </div>
+        <div class="btn-group col-xs-12 ui-front">
+          <div class="row"><h3 class="text-center">Batter Characteristics</h3></div>
+          <div class="row">
+            <div class="btn btn-default label-style col-xs-12">
+              <input type="text" class="form-control" id="batter-name" placeholder="Batter Name">
+            </div>
+          </div>
+          <div class="row">
+            <div class="btn btn-default label-style col-xs-5">
+              <label class="radio-inline pull-left">
+                <input type="radio" name="handednessOptions" id="left-handed" value="L"> Left-handed
+              </label>
+            </div>
+            <div class="btn btn-default label-style col-xs-5 pull-right">
+              <label class="radio-inline pull-left">
+                <input type="radio" name="handednessOptions" id="right-handed" value="R"> Right-handed
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="btn-group col-xs-12">
-          <div class=row><h3 class="text-center">Graph Type</h3></div>
+          <div class="row"><h3 class="text-center">Graph Type</h3></div>
           <div class="row">
             <label class="btn btn-default col-xs-5 label-style">
               <input type="checkbox" value="contour" class="pull-left graph-filters" checked> <span class="pull-left button-text">Contoured Heatmap</span>
@@ -43,7 +70,7 @@
           </div>
         </div>
         <div class="btn-group col-xs-12">
-          <div class=row><h3 class="text-center">Pitch Outcome</h3></div>
+          <div class="row"><h3 class="text-center">Pitch Outcome</h3></div>
           <div class="row">
             <label class="btn btn-default col-xs-5 label-style">
               <input type="checkbox" value="ball" class="pull-left pitch-outcome-filters"> <span class="pull-left button-text">Ball</span>
@@ -70,7 +97,7 @@
           </div>
         </div>
         <div class="btn-group col-xs-12">
-          <div class=row><h3 class="text-center">Pitch Type</h3></div>
+          <div class="row"><h3 class="text-center">Pitch Type</h3></div>
           <div class="row">
             <label class="btn btn-default col-xs-5 label-style hidden">
               <input type="checkbox" value="FA" class="pull-left pitch-type-filters"> <span class="pull-left button-text">Fastball</span>

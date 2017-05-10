@@ -1,7 +1,18 @@
 $(function() {
-    drawGraph();
+    drawGraphAndFormatFilters();
     $(":checkbox").change(function(){
-        drawGraph();
+        drawGraphAndFormatFilters();
+    });
+    $(":radio").change(function(){
+        drawGraphAndFormatFilters();
+    });
+    $( "#batter-name").on("autocompleteselect", function(event, ui) {
+        drawGraphAndFormatFilters();
+    });
+    $("#batter-name").on("change keyup copy paste cut", function() {
+        if (!this.value) {
+            drawGraphAndFormatFilters();
+        }
     });
     $(".uncheck-all").change(function(){
         var currentClasses = this.className.split(/\s+/)
@@ -10,16 +21,19 @@ $(function() {
         var classToUncheck = currentClasses[0]
         $("." + classToUncheck).prop("checked", false);
         $(".uncheck-all").prop("checked", false);
-        drawGraph();
+        drawGraphAndFormatFilters();
     })
     $( window ).resize(function() {
-        drawGraph();
+        drawGraphAndFormatFilters();
     });
 });
 
-function drawGraph() {
+////////// MAIN GRAPH //////////
+function drawGraphAndFormatFilters() {
     Plotly.d3.json("lester.json", function(pitches) {
         hideUnusedPitchTypes(pitches)
+        initializeAutocomplete(pitches)
+
         var y_max = Math.round(Math.max.apply(Math,pitches.map(function(pitch){return pitch.location_z;}))) + .25
         var x_max = Math.round(Math.max.apply(Math,pitches.map(function(pitch){return pitch.location_x;}))) + .25
         var y_min = Math.round(Math.min.apply(Math,pitches.map(function(pitch){return pitch.location_z;}))) - .25
@@ -63,12 +77,8 @@ function drawGraph() {
             ]
         };
 
-        var filters = {
-            "outcome_filters": getPitchOutcomeFilters(),
-            "type_filters": getPitchTypeFilters()
-        }
+        var filteredPitches = filterPitches(pitches)
 
-        var filteredPitches = filterPitches(pitches, filters)
         var x_vals = getPitchPositions(filteredPitches, "x")
         var y_vals = getPitchPositions(filteredPitches, "y")
 
@@ -79,9 +89,9 @@ function drawGraph() {
             type: "scatter",
             name: "",
             marker: {
-                color: "rgb(102,0,0)",
+                color: determineColors(filteredPitches),
                 size: 5,
-                opacity: 0.3,
+                opacity: 1,
                 symbol: determineSymbols(filteredPitches)
             },
         };
@@ -109,6 +119,8 @@ function drawGraph() {
     });
 }
 
+////////// LAYOUT/DISPLAY //////////
+
 function hideUnusedPitchTypes(pitches) {
     // Hide filter checkboxes for pitches that are not present in dataset
     $(".pitch-type-filters").parents('label').addClass('hidden')
@@ -134,107 +146,19 @@ function hideUnusedPitchTypes(pitches) {
     });
 }
 
-function getPitchOutcomeFilters() {
-    return $(".pitch-outcome-filters:checked").map(function() {
-        return this.value;
+function initializeAutocomplete(pitches) {
+    var batterNames = pitches.map(function(pitch) {
+        return pitch.batter_name
     });
-}
-
-function getPitchTypeFilters() {
-    return $(".pitch-type-filters:checked").map(function() {
-        return this.value;
-    });
-}
-
-function getGraphFilters() {
-    return $(".graph-filters:checked").map(function() {
-        return this.value;
-    });
-}
-
-function checkForTrue(bool) {
-    return bool === true
-}
-
-function filterPitches(pitches, filters) {
-    var filteredPitches = []
-    // If there are no filters, return all the pitches
-    if (filters.type_filters.length === 0 && filters.outcome_filters.length === 0) {
-        filteredPitches = pitches
-    } else {
-        for (i = 0; i < pitches.length; i++) {
-            // Remove pitches where Y value is below 0; bad data.
-            // if (pitches[i].location_z < 0) {
-            //     pitches.splice(i, 1)
-            // }
-
-            var outcome_filters_results = []
-
-            // Apply filters
-            if (filters.outcome_filters.length > 0) {
-                if ($.inArray("ball", filters.outcome_filters) != -1) {
-                    if (pitches[i].is_called_ball === true) {
-                        outcome_filters_results.push(true)
-                    } else {
-                        outcome_filters_results.push(false)
-                    };
-                };
-                if ($.inArray("strike", filters.outcome_filters) != -1) {
-                    if ((pitches[i].is_bip === false && pitches[i].is_swing === true) || pitches[i].is_called_strike === true) {
-                        outcome_filters_results.push(true)
-                    } else {
-                        outcome_filters_results.push(false)
-                    };
-                };
-                if ($.inArray("foul", filters.outcome_filters) != -1) {
-                    if (pitches[i].is_foul === true) {
-                        outcome_filters_results.push(true)
-                    } else {
-                        outcome_filters_results.push(false)
-                    };
-                };
-                if ($.inArray("bip", filters.outcome_filters) != -1) {
-                    if (pitches[i].is_bip === true) {
-                        outcome_filters_results.push(true)
-                    } else {
-                        outcome_filters_results.push(false)
-                    };
-                };
-                if ($.inArray("hbp", filters.outcome_filters) != -1) {
-                    if (pitches[i].pa_outcome === "HBP" && pitches[i].is_pa_pitch === true) {
-                        outcome_filters_results.push(true)
-                    } else {
-                        outcome_filters_results.push(false)
-                    };
-                };
-            }
-
-            var type_filters_results = []
-
-            if (filters.type_filters.length > 0) {
-                if ($.inArray(pitches[i].pitch_type, filters.type_filters) != -1) {
-                    type_filters_results.push(true)
-                } else {
-                    type_filters_results.push(false)
-                };
-            };
-
-            if (outcome_filters_results.length > 0 && type_filters_results.length > 0) {
-                if (outcome_filters_results.includes(true) && type_filters_results.includes(true)) {
-                    filteredPitches.push(pitches[i])
-                }
-            } else if (outcome_filters_results.length > 0 && type_filters_results.length === 0) {
-                if (outcome_filters_results.includes(true)) {
-                    filteredPitches.push(pitches[i])
-                }
-            } else if (outcome_filters_results.length === 0 && type_filters_results.length > 0) {
-                if (type_filters_results.includes(true)) {
-                    filteredPitches.push(pitches[i])
-                }
-            }
+    var uniqueBatterNames = new Set(batterNames)
+    var nameArray = Array.from(uniqueBatterNames)
+    $("#batter-name").autocomplete({
+        source: nameArray,
+        messages: {
+            noResults: '',
+            results: function() {}
         }
-    }
-    return filteredPitches
+    })
 }
 
 function getPitchPositions(pitches, axis) {
@@ -268,9 +192,32 @@ function determineSymbols(pitches) {
     });
 }
 
+function determineColors(pitches) {
+    return pitches.map(function(pitch) {
+        if (pitch.is_called_strike === true) {
+            return "rgb(0,109,44)"
+        } else if (pitch.is_foul === true) {
+            return "rgb(0,109,44)"
+        } else if (pitch.is_bip === false && pitch.is_swing === true) {
+            return "rgb(0,109,44)"
+        } else if (pitch.is_called_ball === true) {
+            return "rgb(44,162,95)"
+        } else if (pitch.is_bip === true) {
+            return "rgb(102,194,164)"
+        } else if (pitch.pa_outcome === "HBP") {
+            return "rgb(153,216,201)"
+        } else {
+            // Missed bunt attempt, counts as a strike
+            return "rgb(0,109,44)"
+        }
+    });
+}
+
 function getRequestedGraphs(availableGraphs) {
     requestedGraphs = []
-    graphFilters = getGraphFilters()
+    graphFilters = $(".graph-filters:checked").map(function() {
+        return this.value;
+    });
     if (graphFilters.length > 0) {
         for (i=0; i < graphFilters.length; i++) {
             requestedGraphs.push(availableGraphs[graphFilters[i]])
@@ -278,10 +225,123 @@ function getRequestedGraphs(availableGraphs) {
     } else {
         var keys = Object.keys(availableGraphs)
         for (i=0; i < keys.length; i++) {
-            // Set default to requested heatmap
+            // Set default to heatmap
             $("input[type=checkbox][value=contour]").prop("checked", true);
             requestedGraphs.push(availableGraphs["contour"])
         }
     }
     return requestedGraphs
+}
+
+////////// FILTERING //////////
+
+function filterPitches(pitches) {
+    var filters = {
+        "outcomeFilters": getPitchOutcomeFilters(),
+        "typeFilters": getPitchTypeFilters(),
+        "batterName": getBatterName(),
+        "batterHandedness": getBatterHandedness()
+    }
+
+    var resultArrays = []
+    var filterCount = 0
+
+    Object.keys(filters).forEach(function(key) {
+        filterCount += filters[key].length
+        if (key === "outcomeFilters" && filters[key].length > 0) {
+            resultArrays.push(evaluateOutcomeFilters(pitches, filters[key]));
+        } else if (key === "typeFilters" && filters[key].length > 0) {
+            resultArrays.push(evaluatePitchTypeFilters(pitches, filters[key]));
+        } else if (key === "batterName" && filters[key].length > 0) {
+            resultArrays.push(evaluateBatterNameFilter(pitches, filters[key]));
+        } else if (key === "batterHandedness" && filters[key].length > 0) {
+            resultArrays.push(evaluateBatterHandednessFilter(pitches, filters[key]));
+        }
+    });
+
+    if (filterCount === 0) {
+        return pitches
+    } else {
+        var result = resultArrays.shift().reduce(function(results, pitch) {
+            if (results.indexOf(pitch) === -1 && resultArrays.every(function(array) {
+                return array.indexOf(pitch) !== -1;
+            })) {
+                results.push(pitch);
+            }
+            return results;
+        }, []);
+        return result
+    }
+}
+
+function getPitchOutcomeFilters() {
+    return $(".pitch-outcome-filters:checked").map(function() {
+        return this.value;
+    });
+}
+
+function getPitchTypeFilters() {
+    return $(".pitch-type-filters:checked").map(function() {
+        return this.value;
+    });
+}
+
+function getBatterName() {
+    if ($("#batter-name").val()) {
+        return [$("#batter-name").val()];
+    } else {
+        return []
+    }
+}
+
+function getBatterHandedness() {
+    if ($("input[name='handednessOptions']:checked").val()) {
+        return [$("input[name='handednessOptions']:checked").val()];
+    } else {
+        return []
+    }
+}
+
+function evaluateOutcomeFilters(pitches, filters) {
+    return pitches.filter(function(pitch) {
+        if ($.inArray("ball", filters) != -1 && pitch.is_called_ball === true) {
+            return pitch
+        };
+        if ($.inArray("strike", filters) != -1 && ((pitch.is_bip === false && pitch.is_swing === true) || pitch.is_called_strike === true)) {
+            return pitch
+        };
+        if ($.inArray("foul", filters) != -1 && pitch.is_foul === true) {
+            return pitch
+        };
+        if ($.inArray("bip", filters) != -1 && pitch.is_bip === true) {
+            return pitch
+        };
+        if ($.inArray("hbp", filters) != -1 && pitch.pa_outcome === "HBP" && pitch.is_pa_pitch === true) {
+            return pitch
+        };
+    });
+}
+
+function evaluatePitchTypeFilters(pitches, filters) {
+    return pitches.filter(function(pitch) {
+        if ($.inArray(pitch.pitch_type, filters) != -1) {
+            return pitch
+        }
+    });
+}
+
+function evaluateBatterNameFilter(pitches, batterName) {
+    return pitches.filter(function(pitch) {
+        if (pitch.batter_name === batterName[0]) {
+            return pitch
+        }
+    });
+}
+
+function evaluateBatterHandednessFilter(pitches, batterHandedness) {
+    return pitches.filter(function(pitch) {
+        if (pitch.batter_side === batterHandedness[0]) {
+            return pitch
+        }
+    });
 }
