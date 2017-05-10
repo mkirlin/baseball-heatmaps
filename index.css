@@ -10,14 +10,11 @@ h3 {
 
 .label-style {
     margin-bottom: 10px;
+    margin-right: 5px;
 }
 
 .button-text {
     margin-left: 10px;
-}
-
-#heatmap {
-    max-width: 550px;
 }
 
 .modebar {
