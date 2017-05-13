@@ -38,10 +38,12 @@ function drawGraphAndFormatFilters() {
         var xMin = Math.round(Math.min.apply(Math,pitches.map(function(pitch){return pitch.location_x;}))) - 0.25;
 
         var layout = {
-            showlegend: false,
+            showlegend: true,
+            legend: {"orientation": "h"},
             hovermode: "closest",
             margin: {
-                t: 20
+                t: 20,
+                b: 60
             },
             xaxis: {
                 range: [xMin, xMax],
@@ -85,7 +87,8 @@ function drawGraphAndFormatFilters() {
             y: yVals,
             mode: "markers",
             type: "scatter",
-            name: "",
+            name: "main",
+            showlegend: false,
             hovertext: generateHoverText(filteredPitches),
             hoverinfo: "text",
             marker: {
@@ -102,8 +105,15 @@ function drawGraphAndFormatFilters() {
             colorscale: "Hot",
             name: "",
             reversescale: true,
-            showscale: false,
-            type: "histogram2dcontour"
+            showscale: true,
+            type: "histogram2dcontour",
+            colorbar: {
+                title: "Number of Pitches",
+                titleside: "right",
+                titlefont: {
+                    size: 14
+                }
+            }
         };
 
         availableGraphs = {
@@ -112,6 +122,63 @@ function drawGraphAndFormatFilters() {
         };
 
         var data = getRequestedGraphs(availableGraphs);
+
+        // Add legend to scattergram
+        if (data.filter(function(graph) { return graph.type == "scatter"; }).length > 0) {
+            data.push(
+                {
+                    name: "Strike/Foul",
+                    x: [60],
+                    y: [60],
+                    mode: "markers",
+                    marker: {
+                        color: "rgb(178,24,43)",
+                        symbol: "x"
+                    },
+                    showlegend: true,
+                }
+            );
+            data.push(
+                {
+                    name: "Ball",
+                    x: [60],
+                    y: [60],
+                    mode: "markers",
+                    marker: {
+                        color: "rgb(241,163,64)",
+                        symbol: "circle"
+                    },
+                    showlegend: true,
+                }
+            );
+            data.push(
+                {
+                    name: "Ball In Play",
+                    x: [60],
+                    y: [60],
+                    mode: "markers",
+                    marker: {
+                        color: "rgb(27,120,55)",
+                        symbol: "diamond"
+                    },
+                    showlegend: true,
+                }
+            );
+            data.push(
+                {
+                    name: "Hit By Pitch",
+                    x: [60],
+                    y: [60],
+                    mode: "markers",
+                    marker: {
+                        color: "rgb(33,102,172)",
+                        symbol: "star"
+                    },
+                    showlegend: true,
+                }
+            );
+        }
+
         setPitchCount(filteredPitches.length);
         Plotly.purge("heatmap");
         Plotly.plot("heatmap", data, layout, {displaylogo: false});
