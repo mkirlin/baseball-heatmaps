@@ -88,6 +88,7 @@ function drawGraphAndFormatFilters() {
             y: yVals,
             mode: "markers",
             type: "scatter",
+            name: "",
             hovertext: generateHoverText(filteredPitches),
             hoverinfo: "text",
             marker: {
@@ -103,7 +104,7 @@ function drawGraphAndFormatFilters() {
             y: yVals,
             // colorscale: "YIGnBu",
             colorscale: "Hot",
-            name: "density",
+            name: "",
             reversescale: true,
             showscale: false,
             type: "histogram2dcontour"
