@@ -237,8 +237,8 @@ function getRequestedGraphs(availableGraphs) {
         var keys = Object.keys(availableGraphs);
         for (i=0; i < keys.length; i++) {
             // Set default to heatmap
-            $("input[type=checkbox][value=scattergram]").prop("checked", true);
-            requestedGraphs.push(availableGraphs.scattergram);
+            $("input[type=checkbox][value=contour]").prop("checked", true);
+            requestedGraphs.push(availableGraphs.contour);
         }
     }
     return requestedGraphs;
