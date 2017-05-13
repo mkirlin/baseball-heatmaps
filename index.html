@@ -33,6 +33,7 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-md-6">
+          <!-- Heatmap -->
           <div class="col-xs-12">
             <div class="row"><h3 class="text-center">Pitch Graph</h3></div>
             <div class="row">
@@ -44,6 +45,7 @@
               <div id="heatmap"></div>
             </div>
           </div>
+          <!-- Batter Characteristics Filters -->
           <div class="btn-group col-xs-12 ui-front">
             <div class="row"><h3 class="text-center">Batter Characteristics</h3></div>
             <div class="row">
@@ -67,6 +69,7 @@
           </div>
         </div>
         <div class="col-xs-12 col-md-6">
+          <!-- Graph Type Filters -->
           <div class="btn-group col-xs-12">
             <div class="row"><h3 class="text-center">Graph Type</h3></div>
             <div class="row">
@@ -78,6 +81,7 @@
               </label>
             </div>
           </div>
+          <!-- Pitch Outcome Filters -->
           <div class="btn-group col-xs-12">
             <div class="row"><h3 class="text-center">Pitch Outcome</h3></div>
             <div class="row">
@@ -105,6 +109,7 @@
               <div class="col-xs-4"></div>
             </div>
           </div>
+          <!-- Pitch Type Filters -->
           <div class="btn-group col-xs-12">
             <div class="row"><h3 class="text-center">Pitch Type</h3></div>
             <div class="row">
@@ -157,6 +162,31 @@
                 <input type="checkbox" class="pitch-type-filters uncheck-all"> <span class="button-text">Uncheck All</span>
               </label>
               <div class="col-xs-4"></div>
+            </div>
+          </div>
+          <!-- Miscellaneous Filters -->
+          <div class="btn-group col-xs-12">
+            <div class="row"><h3 class="text-center">Miscellaneous</h3></div>
+            <div class="row">
+              <!-- Inning Filter -->
+              <div class="btn btn-default col-xs-5 label-style">
+                <select class="pull-left misc-filters" id="inning-filter">
+                  <option value="" selected>Filter by inning/all innings</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                </select>
+              </div>
+              <!-- Final Pitch of AB -->
+              <label class="btn btn-default col-xs-5 label-style pull-right">
+                <input type="checkbox" value="final-pitch" id="final-pitch" class="pull-left"> <span class="pull-left button-text">Final Pitch of At-Bat</span>
+              </label>
             </div>
           </div>
         </div>

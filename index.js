@@ -1,12 +1,9 @@
 $(function() {
     drawGraphAndFormatFilters();
-    $(":checkbox").change(function(){
+    $(":checkbox, :radio, select").change(function(){
         drawGraphAndFormatFilters();
     });
-    $(":radio").change(function(){
-        drawGraphAndFormatFilters();
-    });
-    $( "#batter-name").on("autocompleteselect", function(event, ui) {
+    $( "#batter-name").on("autocompleteselect", function() {
         drawGraphAndFormatFilters();
     });
     $("#batter-name").on("change keyup copy paste cut", function() {
@@ -83,7 +80,7 @@ function drawGraphAndFormatFilters() {
         var xVals = getPitchPositions(filteredPitches, "x");
         var yVals = getPitchPositions(filteredPitches, "y");
 
-        var trace1 = {
+        var scattergram = {
             x: xVals,
             y: yVals,
             mode: "markers",
@@ -99,10 +96,9 @@ function drawGraphAndFormatFilters() {
             },
         };
 
-        var trace2 = {
+        var histogram2dcontour = {
             x: xVals,
             y: yVals,
-            // colorscale: "YIGnBu",
             colorscale: "Hot",
             name: "",
             reversescale: true,
@@ -111,8 +107,8 @@ function drawGraphAndFormatFilters() {
         };
 
         availableGraphs = {
-            "scattergram": trace1,
-            "contour": trace2
+            "scattergram": scattergram,
+            "contour": histogram2dcontour
         };
 
         var data = getRequestedGraphs(availableGraphs);
@@ -254,8 +250,10 @@ function filterPitches(pitches) {
     var filters = {
         "outcomeFilters": getPitchOutcomeFilters(),
         "typeFilters": getPitchTypeFilters(),
-        "batterName": getBatterName(),
-        "batterHandedness": getBatterHandedness()
+        "batterName": getBatterNameFilter(),
+        "batterHandedness": getBatterHandednessFilter(),
+        "inning": getInningFilter(),
+        "finalPitch": getFinalPitchFilter(),
     };
 
     var resultArrays = [];
@@ -271,6 +269,10 @@ function filterPitches(pitches) {
             resultArrays.push(evaluateBatterNameFilter(pitches, filters[key]));
         } else if (key === "batterHandedness" && filters[key].length > 0) {
             resultArrays.push(evaluateBatterHandednessFilter(pitches, filters[key]));
+        } else if (key === "inning" && filters[key].length > 0) {
+            resultArrays.push(evaluateInningFilter(pitches, filters[key]));
+        } else if (key === "finalPitch" && filters[key].length > 0) {
+            resultArrays.push(evaluateFinalPitchFilter(pitches));
         }
     });
 
@@ -301,7 +303,7 @@ function getPitchTypeFilters() {
     });
 }
 
-function getBatterName() {
+function getBatterNameFilter() {
     if ($("#batter-name").val()) {
         return [$("#batter-name").val()];
     } else {
@@ -309,9 +311,25 @@ function getBatterName() {
     }
 }
 
-function getBatterHandedness() {
+function getBatterHandednessFilter() {
     if ($("input[name='handedness-options']:checked").val()) {
         return [$("input[name='handedness-options']:checked").val()];
+    } else {
+        return [];
+    }
+}
+
+function getInningFilter() {
+    if ($("#inning-filter").val()) {
+        return [$("#inning-filter").val()];
+    } else {
+        return [];
+    }
+}
+
+function getFinalPitchFilter() {
+    if ($("#final-pitch:checked").val()) {
+        return [$("#final-pitch").val()];
     } else {
         return [];
     }
@@ -356,6 +374,22 @@ function evaluateBatterNameFilter(pitches, batterName) {
 function evaluateBatterHandednessFilter(pitches, batterHandedness) {
     return pitches.filter(function(pitch) {
         if (pitch.batter_side === batterHandedness[0]) {
+            return pitch;
+        }
+    });
+}
+
+function evaluateInningFilter(pitches, inning) {
+    return pitches.filter(function(pitch) {
+        if (pitch.inning === parseInt(inning[0])) {
+            return pitch;
+        }
+    });
+}
+
+function evaluateFinalPitchFilter(pitches) {
+    return pitches.filter(function(pitch) {
+        if (pitch.is_pa_pitch === true) {
             return pitch;
         }
     });
